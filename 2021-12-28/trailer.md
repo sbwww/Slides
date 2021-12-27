@@ -83,31 +83,32 @@ L12 --> O12[Output]
 
 ## Method 1 --- Entropy
 
-<br>
+DeeBERT [^deebert]
+
+1. Entropy as confidence
+2. No further pretraining
+3. Single model with multiple inference configs
 
 ![entropy_illus](/img/entropy_illus.drawio.svg)
-
-DeeBERT [^deebert]
 
 [^deebert]: [DeeBERT: Dynamic Early Exiting for Accelerating BERT Inference [ACL 2020]<br>University of Waterloo, Vector Institute of AI](https://arxiv.org/abs/2004.12993)
 
 <style>
 img {
-  width: 75%;
+  width: 40%;
   margin-left: auto;
   margin-right: auto;
   left: 0;
   right: 0;
   text-align: center;
+  transition: all 0.2s;
 }
-p {
-  text-align: center;
+img:hover {
+  background: #fff;
+  transform: scale(2);
 }
 .footnotes-sep {
   @apply mt-0 opacity-10;
-}
-.footnotes p {
-  text-align: left;
 }
 </style>
 
@@ -115,18 +116,52 @@ p {
 
 ## Method 2 --- Patience
 
-![pabee](/img/pabee.png)
-
 PABEE [^pabee]
+
+1. Patience as confidence
+2. One-stage fine-tuning
+3. Even better performance with shorter inference time!?
+
+![pabee](/img/pabee.png)
 
 [^pabee]: [BERT Loses Patience: Fast and Robust Inference with Early Exit [NIPS 2020]<br>Beihang University, University of California, MSRA](https://arxiv.org/abs/2006.04152v3)
 
 <style>
-p {
-  text-align: center;
-}
 img {
-  width: 75%;
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  transition: all 0.2s;
+}
+img:hover {
+  background: #fff;
+  transform: scale(2);
+}
+.footnotes-sep {
+  @apply mt-0 opacity-10;
+}
+</style>
+
+---
+
+## Method 3 --- Pretraining
+
+ElasticBERT [^elue]
+
+1. Pretrained multi-exit Transformer
+2. Static (base 6-layer) **beats** BERT, RoBERTa, ALBERT, MobileBERT, TinyBERT
+3. Dynamic (earlt exit backbone) **beats** DeeBERT, PABEE
+
+![elasticBERT](/img/elasticBERT.gif)
+
+[^elue]: [Towards Efficient NLP: A Standard Evaluation and A Strong Baseline [WIP]<br>Fudan University, Huawei Poisson Lab](https://arxiv.org/abs/2110.07038v1)
+
+<style>
+img {
+  width: 8%;
   margin-left: auto;
   margin-right: auto;
   left: 0;
@@ -136,47 +171,14 @@ img {
 .footnotes-sep {
   @apply mt-0 opacity-10;
 }
-.footnotes p {
-  text-align: left;
-}
-</style>
-
----
-
-## Method 3 --- Pretraining
-
-![elasticBERT](/img/elasticBERT.gif)
-
-ElasticBERT [^elue]
-
-[^elue]: [Towards Efficient NLP: A Standard Evaluation and A Strong Baseline [WIP]<br>Fudan University, Huawei Poisson Lab](https://arxiv.org/abs/2110.07038v1)
-
-<style>
-p {
-  text-align: center;
-}
-img {
-  width: 15%;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
-  text-align: center;
-}
-.footnotes-sep {
-  @apply mt-8 opacity-10;
-}
-.footnotes p {
-  text-align: left;
-}
 </style>
 
 ---
 
 ## Benchmarking
 
-|                  SOTA                  |            Pareto SOTA [^elue]             |
-| :------------------------------------: | :----------------------------------------: |
+|                  SOTA                   |             Pareto SOTA [^elue]             |
+| :-------------------------------------: | :-----------------------------------------: |
 | <center>![sota](/img/sota.png)</center> | <center>![pareto](/img/pareto.png)</center> |
 
 [^elue]: [Towards Efficient NLP: A Standard Evaluation and A Strong Baseline [WIP]<br>Fudan University, Huawei Poisson Lab](https://arxiv.org/abs/2110.07038v1)

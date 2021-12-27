@@ -172,7 +172,7 @@ center {
 - <font size=6>Pros</font>
   1. **Elastic** - single model with dynamic configs at inference time
   2. **Efficiency** - reduced inference time & energy consumption
-  3. **Effectiveness** - reduced [overthinking (_overfitting_ of inference)](https://arxiv.org/abs/2006.04152v3)
+  3. **Effectiveness** - reduced overthinking (_overfitting_ of inference) [^shallow-deep]
 
 <br>
 
@@ -184,6 +184,17 @@ center {
   3. **Implementation** - no uniformed approach to evaluate _confidence_
 
 </v-click>
+
+[^shallow-deep]: [Shallow-Deep Networks: Understanding and Mitigating Network Overthinking [ICML2019]<br>University of Maryland](https://arxiv.org/abs/1810.07052)
+
+<style>
+.footnotes p {
+  font-size: 20px !important;
+}
+.footnotes-sep {
+  @apply mt-0 opacity-10;
+}
+</style>
 
 ---
 
@@ -233,7 +244,7 @@ $$H(x) = F(p_0) = -\big(p_0 \ln p_0 + (1-p_0) \ln (1-p_0)\big)$$
 where $p_0, p_1 = \operatorname{softmax}(x)$, and $p_1 = 1-p_0$
 
 | <center>![entropy_illus](/img/entropy_illus.drawio.svg)</center> | <center>![entropy_curve](/img/entropy_curve.svg)</center> |
-| :-------------------------------------------------------------: | :------------------------------------------------------: |
+| :--------------------------------------------------------------: | :-------------------------------------------------------: |
 
 - $\argmax\limits_{p_0} F(p_0) = 0.5$, &ensp;&nbsp; $\max\limits F(p_0) = \ln 2 = 0.69$
 - &emsp;&nbsp; $\lim\limits_{p_0\rightarrow 0^+} F(p_0) = 0$ &ensp; , &nbsp;&thinsp; $\lim\limits_{p_0\rightarrow 1^-} F(p_0) = 0$
@@ -277,20 +288,6 @@ def entropy(x):
 
 </v-click>
 
-<v-click>
-
-<img src="/img/bug.gif" alt="bug" />
-
-</v-click>
-
-<style>
-img {
-  position: absolute;
-  top: 100px;
-  left: 680px;
-}
-</style>
-
 ---
 
 ## Fix
@@ -317,35 +314,33 @@ def entropy(x):
 
 ---
 
-## Training
+## Training DeeBERT
 
-Two-stage [^deebert]
+Two-stage
 
 1. Ordinary fine-tuning
    - Embedding, all Transformers, and the last classifier
 2. Each classifier (ex. the last) training
    - Freeze the above parameters that are already fine-tuned
-
-<br>
+   - $\mathcal{L}=\sum_{i=1}^{n-1} \cdot \mathcal{L}_{i}$
 
 <v-click>
+
+<br><br>
 
 <center>Time-consuming training</center>
 
 </v-click>
 
-[^deebert]: [DeeBERT: Dynamic Early Exiting for Accelerating BERT Inference [ACL 2020]<br>University of Waterloo, Vector Institute of AI](https://arxiv.org/abs/2004.12993)
-
 <style>
 center {
-  padding-top: 20px;
   font-size: 30px;
 }
 </style>
 
 ---
 
-## BERT Results
+## DeeBERT Results --- BERT
 
 <br>
 
@@ -458,7 +453,7 @@ center {
 
 ---
 
-## RoBERTa Results
+## DeeBERT Results --- RoBERTa
 
 <br>
 
@@ -586,8 +581,8 @@ center {
 
 ## Illustrated Results --- Single-Sentence
 
-|                  CoLA\*                  |                  SST-2                   |
-| :--------------------------------------: | :--------------------------------------: |
+|                  CoLA\*                   |                   SST-2                   |
+| :---------------------------------------: | :---------------------------------------: |
 |  <center>![cola](/img/cola.png)</center>  |  <center>![sst2](/img/sst2.png)</center>  |
 | <center>![cola2](/img/cola2.png)</center> | <center>![sst22](/img/sst22.png)</center> |
 
@@ -606,8 +601,8 @@ img:hover {
 
 ## Illustrated Results --- Similarity and Paraphrase
 
-|                   MRPC                   |                 STS-B\*                  |                  QQP                   |
-| :--------------------------------------: | :--------------------------------------: | :------------------------------------: |
+|                   MRPC                    |                  STS-B\*                  |                   QQP                   |
+| :---------------------------------------: | :---------------------------------------: | :-------------------------------------: |
 |  <center>![mrpc](/img/mrpc.png)</center>  |  <center>![stsb](/img/stsb.png)</center>  |  <center>![qqp](/img/qqp.png)</center>  |
 | <center>![mrpc2](/img/mrpc2.png)</center> | <center>![stsb2](/img/stsb2.png)</center> | <center>![qqp2](/img/qqp2.png)</center> |
 
@@ -625,8 +620,8 @@ img:hover {
 
 ## Illustrated Results --- Inference
 
-|                   MNLI                   |                   QNLI                   |                  RTE                   |                  WNLI\*                  |
-| :--------------------------------------: | :--------------------------------------: | :------------------------------------: | :--------------------------------------: |
+|                   MNLI                    |                   QNLI                    |                   RTE                   |                  WNLI\*                   |
+| :---------------------------------------: | :---------------------------------------: | :-------------------------------------: | :---------------------------------------: |
 |  <center>![mnli](/img/mnli.png)</center>  |  <center>![qnli](/img/qnli.png)</center>  |  <center>![rte](/img/rte.png)</center>  |  <center>![wnli](/img/wnli.png)</center>  |
 | <center>![mnli2](/img/mnli2.png)</center> | <center>![qnli2](/img/qnli2.png)</center> | <center>![rte2](/img/rte2.png)</center> | <center>![wnli2](/img/wnli2.png)</center> |
 
@@ -648,8 +643,8 @@ img:hover {
   1. [CLS] token entropy → mean value of non-padding token entropies
   2. maximum threshold: $\ln 9=2.20$
 
-|                                        |                                         |
-| :------------------------------------: | :-------------------------------------: |
+|                                         |                                          |
+| :-------------------------------------: | :--------------------------------------: |
 | <center>![ner](/img/conll.png)</center> | <center>![ner](/img/conll2.png)</center> |
 
 <style>
@@ -939,12 +934,125 @@ img {
 
 ## Illustrated Patience
 
+![patience](/img/patience.drawio.svg)
+
+<style>
+img {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+</style>
+
+---
+
+## Training PABEE
+
+One stage
+
+- Weighted average loss following [^shallow-deep]
+
+$$
+\mathcal{L}=\frac{\sum_{j=1}^{n} j \cdot \mathcal{L}_{j}}{\sum_{j=1}^{n} j}
+$$
+
+<center>Similar training time</center>
+
+[^shallow-deep]: [Shallow-Deep Networks: Understanding and Mitigating Network Overthinking [ICML2019]<br>University of Maryland](https://arxiv.org/abs/1810.07052)
+
+<style>
+.footnotes p {
+  font-size: 20px !important;
+}
+.footnotes-sep {
+  @apply mt-10 opacity-10;
+}
+center {
+  font-size: 40px;
+  padding-top: 40px;
+}
+</style>
+
+---
+
+## PABEE Results --- BERT
+
+![pabee-curve](/img/pabee-bert.png)
+
+<style>
+img {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+</style>
+
+---
+
+## PABEE Results --- ALBERT
+
+![pabee-curve](/img/pabee-albert.png)
+
+<style>
+img {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+</style>
+
+<!-- why not BERT -->
+
+---
+
+## PABEE Results --- Overthinking
+
+![pabee-curve](/img/pabee-curve.png)
+
+<style>
+img {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+</style>
+
+<!--
+one-stage training, final classifier not good
+why speedup and patience same coordinates?
+-->
+
+---
+
+## Theorem
+
+PABEE **improves** the accuracy $\quad s.t. \quad n-t<\left(\frac{1}{2 q}\right)^{t}\left(\frac{p}{q}\right)-p \quad$ where
+
+- $t$ - patience
+- $n$ - internal classifiers
+- $q$ - error rate of internal classifiers (ex. the final)
+- $p$ - error rate of the final classifier
+
+Formula is not correct!
+
 ---
 
 ## Benchmarking
 
-|                  SOTA                  |            Pareto SOTA [^elue]             |
-| :------------------------------------: | :----------------------------------------: |
+|                  SOTA                   |             Pareto SOTA [^elue]             |
+| :-------------------------------------: | :-----------------------------------------: |
 | <center>![sota](/img/sota.png)</center> | <center>![pareto](/img/pareto.png)</center> |
 
 [^elue]: [Towards Efficient NLP: A Standard Evaluation and A Strong Baseline [WIP]<br>Fudan University, Huawei Poisson Lab](https://arxiv.org/abs/2110.07038v1)
@@ -989,6 +1097,12 @@ w.r.t.
 
 ---
 
+<YouTube src="https://www.youtube.com/watch?v=9sXEBzI1R5Q" />
+
+---
+
+## Baseline
+
 ![elue_score](/img/elue_score.png)
 
 <style>
@@ -996,14 +1110,6 @@ img {
   width: 60%;
 }
 </style>
-
----
-
-<YouTube src="https://www.youtube.com/watch?v=9sXEBzI1R5Q" />
-
----
-
-## Baseline
 
 ---
 
@@ -1040,11 +1146,13 @@ Pretraining objectives
 
 ## Gradient Equilibrium
 
-Gradient equilibrium (Li et al., 2019) is adopted to alleviate the conflict of the losses at different layers.
+Gradient equilibrium [^gradient-equilibrium] gradient re-scaling.
 
-Pre-training with the simply summed loss → gradient imbalance
+Summed loss → gradient imbalance
 
 overlap of subnetworks, the variance of the gradient may grow overly large → leading to unstable training
+
+[^gradient-equilibrium]: [Improved Techniques for Training Adaptive Deep Networks [ICCV 2019]<br>THU, Baidu, University of Oxford](https://arxiv.org/abs/1908.06294)
 
 ---
 
@@ -1067,7 +1175,7 @@ E.g., for 12 Layers, $\mathcal{G}_{1}=\{1,3,5,7,9,11,12\}$, $\mathcal{G}_{2}=\{2
 ## ElasticBERT Results
 
 | <center>![elue_sst2](/img/elue_sst2.jpg) SST-2</center>         | <center>![elue_imdb](/img/elue_imdb.jpg) IMDb</center> | <center>![elue_snli](/img/elue_snli.jpg) SNLI</center>  |
-| -------------------------------------------------------------- | ----------------------------------------------------- | ------------------------------------------------------ |
+| --------------------------------------------------------------- | ------------------------------------------------------ | ------------------------------------------------------- |
 | <center>![elue_scitail](/img/elue_scitail.jpg) SciTail</center> | <center>![elue_mrpc](/img/elue_mrpc.jpg) MRPC</center> | <center>![elue_stsb](/img/elue_stsb.jpg) STS-B</center> |
 
 <style>

@@ -8,11 +8,14 @@ h2 {
   background-size: 100%;
   -webkit-background-clip: text;
   -moz-background-clip: text;
+  background-clip: text;
+  clip: text;
   -webkit-text-fill-color: transparent;
   -moz-text-fill-color: transparent;
 }
 
-p, li {
+p,
+li {
   font-size: 24px;
   text-align: justify;
 }
@@ -34,4 +37,8 @@ p, li {
 }
 .footnote-backref {
   display: none;
+}
+
+.katex {
+  font-size: 1em !important;
 }

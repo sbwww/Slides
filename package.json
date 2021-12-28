@@ -3,9 +3,10 @@
   "name": "2021-12-28",
   "scripts": {
     "build": "cd %npm_package_name% && slidev build",
-    "dev": "cd %npm_package_name% && slidev --open trailer.md",
+    "dev": "cd %npm_package_name% && slidev --open slides.md",
     "export": "cd %npm_package_name% && slidev export",
     "pub": "cd %npm_package_name% && slidev build slides.md --base /Slides/%npm_package_name%/",
+    "pv": "cd %npm_package_name% && slidev --open trailer.md",
     "pre": "cd %npm_package_name% && slidev build trailer.md --base /Slides/%npm_package_name%-Trailer/"
   },
   "dependencies": {

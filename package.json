@@ -13,7 +13,8 @@
     "@slidev/cli": "^0.27.18",
     "@slidev/theme-default": "*",
     "@slidev/theme-seriph": "*",
-    "node-html-parser": "^5.1.0"
+    "node-html-parser": "^5.1.0",
+    "playwright-chromium": "^1.17.1"
   },
   "devDependencies": {
     "@iconify-json/bi": "^1.0.10"

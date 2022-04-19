@@ -1,0 +1,70 @@
+h1 {
+  font-size: 60px !important;
+}
+h2 {
+  font-size: 40px !important;
+  padding-bottom: 20px;
+  background-color: #1f85ad;
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+
+p,
+li {
+  font-size: 24px;
+  text-align: justify;
+}
+.slidev-code {
+  font-size: 20px !important;
+  padding: 10px !important;
+  line-height: 28px !important;
+}
+
+.footnotes-sep {
+  margin-top: 0%;
+  opacity: 10%;
+}
+.footnotes {
+  opacity: 75%;
+}
+.footnotes p {
+  font-size: 22px !important;
+  line-height: 2rem !important;
+}
+.footnote-backref {
+  display: none;
+}
+
+.katex {
+  font-size: 1em !important;
+}
+
+img {
+  transition: all 0.2s;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+img[src*="#w40"] {
+  width: 40% !important;
+}
+img[src*="#w50"] {
+  width: 50% !important;
+}
+img[src*="#w60"] {
+  width: 60% !important;
+}
+img[src*="#w80"] {
+  width: 80% !important;
+}
+img:hover {
+  background: #fff;
+  transform: scale(1.4);
+}

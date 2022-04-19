@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "2021-12-28",
+  "name": "2022-04-19",
   "scripts": {
     "build": "cd %npm_package_name% && slidev build",
     "dev": "cd %npm_package_name% && slidev --open slides.md",

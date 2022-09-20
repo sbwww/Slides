@@ -2,9 +2,9 @@ h1 {
   font-size: 3.5rem !important;
 }
 h2 {
-  font-size: 1.75rem !important;
+  font-size: 1.7rem !important;
   text-align: justify;
-  padding-bottom: 1.5rem;
+  padding-bottom: 1.25rem;
   background-color: #1f85ad;
   background-size: 100%;
   -webkit-background-clip: text;
@@ -34,11 +34,11 @@ li {
 .footnotes {
   opacity: 75%;
   position: fixed;
-  bottom: 0.5rem;
+  bottom: 0.75rem;
 }
 .footnotes p {
-  font-size: 1.25rem !important;
-  line-height: 2.0rem !important;
+  font-size: 1.2rem !important;
+  line-height: 1.75rem !important;
   margin-top: 0.1rem !important;
   margin-bottom: 0.1rem !important;
 }

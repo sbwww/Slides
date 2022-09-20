@@ -69,7 +69,7 @@ $$Cost(R) \propto E \cdot D \cdot H$$
 
 [^green]: [Green AI, Communications of the ACM, 2020](https://dl.acm.org/doi/10.1145/3381831)
 
-<!-- Green AI 是 20 年的文章，比较宏观地讲了对高效，也就是 green 的认识
+<!-- Green AI 是 20 年的文章，比较宏观地讲了对 green，也就是高效的认识
 文章提出一个关系，代价正比于这三个东西，分别是处理一个样本的代价、训练数据集大小、超参搜索次数
 这说的比较宏观，转述一下就是，1.模型计算量和训练方法；2.全量还是小样本，这里总结的不太准确，因为一般小样本场景会有更复杂的训练方法，使 E 更大。也可以通过加快收敛减少迭代次数；3.可复现性，要不要一个很严苛的设置 -->
 
@@ -83,7 +83,7 @@ $$Cost(R) \propto E \cdot D \cdot H$$
 
 <style>
 table {
-  margin-top: -6.0rem;
+  margin-top: -5.5rem;
 }
 img {
   margin: 0 0 0 0;
@@ -96,12 +96,17 @@ td:first-child {
   width: 50%;
 }
 img {
-  width: 90%;
+  width: 85%;
 }
 img:hover {
   transform: none;
 }
 </style>
+
+<!--
+这是 8 月 31 日挂上 arxiv 的一篇综述文章，对高效 NLP 有一个比较全面的总结，文章主要是按照
+数据收集处理、模型设计、预训练、精调、推断、模型选择 这样的流程
+-->
 
 ---
 
@@ -118,32 +123,9 @@ img:hover {
 [^cofi]: [Structured Pruning Learns Compact and Accurate Models<br>Princeton U, ACL 2022](https://arxiv.org/abs/2204.00408)
 [^learner]: [Efficient Fine-Tuning of Compressed Language Models with Learners<br>McGill U, ICML 2022 Workshop on Hardware Aware Efficient Training](https://arxiv.org/abs/2208.02070)
 
-<!-- 实现高效的方法这边主要针对刚刚的第一点，也就是想办法减小这个 E 和 D
+<!-- 实现高效的方法这边主要针对刚刚的中间部分也就是从模型设计到推断的过程，也就是想办法减小这个 E 和 D
 可以把减小的方法分成两种，一个是模型角度减少模型计算量，另一个是训练方法角度的高效训练
-模型角度有两个关注点，一是哪些地方的冗余更冗余，比如宽度、深度；二是时间点的选择，也就是说，是在训练好的模型基础上减小体积，还是重新训一个小模型
- -->
-
-<!-- <table>
-  <tr>
-    <td>
-      <ol>
-        <li>Reducing model computation [^turc] [^cofi]
-        <ol>
-          <li>Which parts are more redundant?</li>
-          <li>Reduce before or after pre-training?</li>
-        </ol></li>
-        <li>Efficient training [^learner]
-        <ol>
-          <li>Which parameters need tuning?</li>
-          <li>How to achieve efficient inference?</li>
-        </ol></li>
-      </ol>
-    </td>
-    <td>
-      $$Cost(R) \propto E \cdot D \cdot H$$
-    </td>
-  </tr>
-</table> -->
+模型角度有两个关注点，一是哪些地方的冗余更冗余，比如宽度、深度；二是时间点的选择，也就是说，是在训练好的模型基础上减小体积，还是重新训一个小模型 -->
 
 ---
 
@@ -162,7 +144,7 @@ img:hover {
 >
 > Importance and magnitude of the contribution are questioned, although it is important to share empirical results. &emsp;&emsp; --- from [OpenReview](https://openreview.net/forum?id=BJg7x1HFvB)
 
-<!-- 文章主要特点就是实验很多，作者本人也说没有什么很新的东西，重在研究蒸馏方面被忽视的问题，但也因此被拒
+<!-- 这是 ICLR 20 的一篇拒稿文章，但是影响力比较大，已经快有 300 citations。文章主要特点就是实验很多，作者本人也说没有什么很新的东西，重在研究蒸馏方面被忽视的问题，但也因此被拒
 文章提出一个 Pre-trained Distillation (PD) 方法来研究大小模型间的知识蒸馏，可以比较简单地达到更 fancy 和 restrictive 方法的效果 -->
 
 ---
@@ -198,6 +180,8 @@ img:hover {
 - What is the **best student** for a fixed parameter size budget?
   - **Prioritize depth over width**, especially with pre-trained students.
 
+<!-- 对于为什么要完整预训练一个学生模型，文章给出了几个点 -->
+
 ---
 
 ## Pre-training V.S. Truncating
@@ -217,6 +201,8 @@ img:hover {
   transform: none;
 }
 </style>
+
+<!-- 针对刚刚的前两点，也就是 pre-train 优于 truncate，和只 pre-train embedding 不行，文章做了实验来证明 -->
 
 ---
 
@@ -238,6 +224,11 @@ img:hover {
 }
 </style>
 
+<!-- 针对第三点，也就是深度优于宽度，文章 pre-train 了 24 个不同大小组合的小 BERT
+基本上参数量是正比于层数 L 和 隐藏大小 H 的平方，运行时间大致上正比于 L 和 H
+所以导致参数量相近的情况下，Squat 模型，也就是浅而宽的模型，实际运行速度比 Slender 模型，也就是深而窄的更快
+这也就是为什么我只敢和 TinyBERT 比 FLOPs 不敢比实际运行时间的原因 -->
+
 ---
 
 ## Depth Outweighs Width
@@ -258,7 +249,8 @@ img:hover {
 }
 </style>
 
-<!-- 在 SST-2 实验看起来 6-12 层效果差不多，但这不一定准确，在做提前退出的时候就发现 SST-2 并不需要深层模型的能力，2-4 层即可做出不错的效果，而对于 NLI 任务则是深层模型效果好很多 -->
+<!-- 在 24 个小 BERT 上做精调，可以观察深度和宽度的影响
+在 SST-2 实验看起来 6-12 层效果差不多，但这不一定准确，在做提前退出的时候就发现 SST-2 并不需要深层模型的能力，2-4 层即可做出不错的效果，而对于 NLI 任务则是深层模型效果好很多 -->
 
 ---
 
@@ -275,13 +267,15 @@ img:hover {
 }
 </style>
 
+<!-- 这组实验主要想证明文章 PD 方法的鲁棒性，但是我觉得看起来并不是特别明显爱你，尽管表现更好，但是变化趋势没什么区别，所以并没有感觉到很强的鲁棒性 -->
+
 ---
 
-## Compound Effects
+## Ablation Studies
 
-|                               |                                                                                                                                                                              |
-| :---------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| ![compound](/img/compound.png) | Pre-training + Distillation $>$<br>Pre-training + Fine-tuning $>$<br>Vanilla Distillation<br><br>($\mathcal{D}_{LM}=\mathcal{D}_{T}$ unlabeled<br>$\mathcal{D}_{L}$ labeled) |
+|                                |                                                                                                                                                                              |
+| :----------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![compound](/img/compound.png) | Pre-training + Distillation $>$<br>Pre-training $>$<br>Vanilla Distillation<br><br>($\mathcal{D}_{LM}=\mathcal{D}_{T}$ are unlabeled) |
 
 <style>
 td:first-child {
@@ -295,7 +289,7 @@ img:hover {
 }
 </style>
 
-<!-- NLI* 是从 SNLI MNLI QQP 3 个数据集构造的无标签 LM 数据集，这样在无标签数据集上 pre-train + distill 的小模型仍然能比 pre-train + 下游任务精调的小模型 -->
+<!-- 这部分其实就是个消融实验，实验在相同的无标签数据集上做 pre-train 和 transfer distill，意思是说这样可以保证 PD 比 PF 的优点只来自于 transfer distill 的过程 -->
 
 ---
 
@@ -309,6 +303,9 @@ Contributions:
   - Propose a flexible granularity CoFi (Coarse and Fine-grained) Pruning for **large speedup**.
   - Propose a layer-wise distillation for unknown student architecture and **competitive accuracy**.
   - Does not include general distillation and additional unlabeled data for **much less computation**.
+
+<!-- 这篇是陈丹琦在 ACL 22 上的文章。文章几乎一直在 diss 像上一篇和 TinyBERT 这类的蒸馏方法，因为从零开始蒸出一个小模型开销太大了，像上一篇还要用预训练，TinyBERT 也是有一个比预训练还猛的 General Distillation
+所以文章选择从大模型中剪出一个小模型来 -->
 
 ---
 
@@ -327,6 +324,8 @@ img:hover {
   transform: none;
 }
 </style>
+
+<!-- 方法示意图中基本涵盖了文章的特点，一个是流程短、训练快，一个是剪枝粒度从细到粗都有 -->
 
 ---
 
@@ -347,6 +346,10 @@ img:hover {
 
 > Masks are trained as real numbers in \[0, 1\], then mapped to 0 or 1 at inference.
 
+<!-- 剪枝粒度从细到粗包括 隐藏维度、FFN 中间维度、注意力头、整个 FFN 或 MHA
+和上次讨论班介绍的一个 token pruning 方法类似，文章是用 mask 的方式实现剪枝
+具体就是在训练时额外训一些 0 到 1 之间连续的实数 soft mask，推断前根据一个阈值截断到 0 或 1 的 hard mask -->
+
 ---
 
 ## Distillation for Unknown Student Architecture
@@ -359,7 +362,9 @@ distillation loss: $\mathcal{L}_{\text {layer}}=\sum\limits_{i \in \mathcal{T}} 
 
 **Layer mismatch** happens on small datasets, e.g., RTE, MRPC. So, a constraint is added to only match a lower student layer than the previously matched student layer.
 
-<!-- 为教师模型的每一层，找到学生模型中最相似，且 FFN 没被剪掉的一层来蒸馏 -->
+<!-- 虽然文章 diss 了 general 蒸馏，但是 task-specific 蒸馏还是真香
+因为 CoFi 方法无法在训练前就知道学生模型的具体结构，因为 mask 也是被训练的，所以文章设计了一种动态的配对蒸馏方法
+为教师模型的每一层，找到学生模型中最相似的一层来蒸馏，并且在某些任务上加了个约束，保证低层匹配到低层，高层匹配到高层 -->
 
 ---
 
@@ -378,12 +383,14 @@ img:hover {
 }
 </style>
 
+<!-- 从曲线来看，CoFi 基本上是帕累托最优的，甚至又是一个比 BERT 还好的压缩模型，只能说 NLP 的压缩虽然慢 CV 一步，但现在也快卷到飞起了 -->
+
 ---
 
 ## Compare to TinyBERT
 
-|                                         |                                |
-| :-------------------------------------: | :----------------------------: |
+|                                          |                                |
+| :--------------------------------------: | :----------------------------: |
 | ![cofi_tinybert](/img/cofi_tinybert.png) | ![cofi_aug](/img/cofi_aug.png) |
 
 - TinyBERT relies on General Distillation and Data Augmentation, which are extremely costly.
@@ -395,6 +402,10 @@ img {
   width: 100%;
 }
 </style>
+
+<!-- 文章主要的对比 baseline 是 TinyBERT，一方面是 CoFi 基本上分更高，另一方面是 CoFi 训练时间短
+而 TinyBERT 对 general distill 和数据增强的依赖性就很高
+但是这边对比也存在一个问题，CoFi 这文章没动 embedding，所以他在对比相近参数量模型的时候，都是没算 embedding 参数量，然而 TinyBERT_4 的 embedding 比 CoFi 小很多，所以可能不是非常公平 -->
 
 ---
 
@@ -420,14 +431,22 @@ td:first-child {
 img {
   width: 75%;
 }
+img:hover {
+  transform: none;
+}
 </style>
+
+<!-- 消融实验主要看剪枝粒度和蒸馏方法
+上面的图是剪枝粒度的影响，但是感觉有点 selective，因为他要把所有方法的稀疏度统一，但是可能存在粗粒度不好剪的问题
+左边是蒸馏方法的研究，属于是所有带蒸馏的文章的固定套路，蒸馏目标有效，并且文章设计的匹配蒸馏也有效
+不过右边的结果有点意思，是说文章的匹配蒸馏方法可以找到一个层间的对齐，但是这部分只是在附录几句话带过了，但我还是挺在意的，因为 EMNLP 里做多出口模型训练的时候，也会有一个类似于 teacher 和 student 层间对齐的问题 -->
 
 ---
 
 ## Remained Structures
 
-|                                           |                            |
-| :---------------------------------------: | :------------------------: |
+|                                            |                            |
+| :----------------------------------------: | :------------------------: |
 | ![average_remain](/img/average_remain.png) | ![remain](/img/remain.png) |
 
 - At **medium** sparsity, **deep** FFNs and MHAs are pruned.
@@ -443,7 +462,10 @@ img {
 }
 </style>
 
-<!-- 右图是 95% 稀疏度 -->
+<!--
+对于剪枝后留下的结构，文章做了一个统计，大致趋势是这三点
+右图是 95% 稀疏度下，留下的结构，每个任务上跑 3 runs，基本上结果比较统一，中间层剪掉的最多，深层剪掉的少点，浅层留下的多
+-->
 
 ---
 
@@ -482,6 +504,10 @@ Contributions:
 
 [^far]: [Efficient Fine-Tuning of BERT Models on the Edge<br>McGill U, IEEE International Symposium on Circuits and Systems 2022](https://arxiv.org/abs/2205.01541)
 
+<!-- 这是一篇 22 年的效率 workshop 文章，跟前两篇不同，主要做参数高效训练
+作者之前还有一个工作，发了个不知道啥会，两篇文章间有一些演进
+然后另外一个比较有意思的地方是，这篇文章不像其他在超大模型上做高效训练的，他说在压缩模型上也能做高效训练，所以我也比较在意 -->
+
 ---
 
 ## Learner Structure
@@ -493,6 +519,8 @@ img:hover {
   transform: none;
 }
 </style>
+
+<!-- 文章提了一个最左边这种 Learner 结构，看到这个结构就突然想到另一篇文章 -->
 
 ---
 
@@ -516,6 +544,8 @@ img:hover {
   transform: none;
 }
 </style>
+
+<!-- 也就是 ICLR 22 的 LoRA，两篇文章提出了完全一样的结构，也就是用两个低秩的矩阵 P1 P2 附在 Linear 旁边，训练时Linear只跑前向，P1 P2 前向和反向都跑。前向的时候，把过完 Linear 和 P1 P2 的结果相加往下传 -->
 
 ---
 
@@ -642,3 +672,5 @@ $$Cost(R) \propto E \cdot D \cdot H$$
 3. Efficient Training \.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\.\. <font color="green">$E \searrow \ D \searrow$</font>
    1. Good on big models
    2. Applicable on small models
+
+<!-- 最后总结一下 -->

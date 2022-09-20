@@ -10,5 +10,8 @@
     "@slidev/theme-default": "*",
     "@slidev/theme-seriph": "*"
   },
-  "name": "2022-09-20"
+  "name": "2022-09-20",
+  "devDependencies": {
+    "playwright-chromium": "^1.25.2"
+  }
 }

@@ -1,0 +1,89 @@
+h1 {
+  font-size: 3.5rem !important;
+}
+h2 {
+  font-size: 1.75rem !important;
+  text-align: justify;
+  padding-bottom: 1.5rem;
+  background-color: #1f85ad;
+  background-size: 100%;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-text-fill-color: transparent;
+}
+
+p,
+li {
+  font-size: 1.5rem !important;
+  line-height: 2.25rem !important;
+  text-align: justify;
+}
+.slidev-code {
+  font-size: 1.5rem !important;
+  padding: 0.5rem !important;
+  line-height: 1.5rem !important;
+}
+
+.footnotes-sep {
+  margin-top: 0%;
+  opacity: 0%;
+}
+.footnotes {
+  opacity: 75%;
+  position: fixed;
+  bottom: 0.5rem;
+}
+.footnotes p {
+  font-size: 1.25rem !important;
+  line-height: 2.0rem !important;
+  margin-top: 0.1rem !important;
+  margin-bottom: 0.1rem !important;
+}
+.footnote-backref {
+  display: none !important;
+}
+
+.katex {
+  font-size: 1.5rem !important;
+}
+
+img {
+  transition: all 0.2s;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
+img:hover {
+  background: #fff;
+  transform: scale(1.4);
+}
+
+table {
+  border: none !important;
+  line-height: 2.25rem !important;
+  margin-bottom: 1.5rem !important;
+  font-size: 1.5rem !important;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}
+
+table td, table th {
+  border: none !important;
+  padding: 0.25rem !important;
+  padding-top: 0rem !important;
+  padding-bottom: 0rem !important;
+}
+.tri-table > thead > tr > th {
+  border-top: 2px solid #000;
+  border-bottom: 1px solid #000;
+}
+.tri-table > tbody > tr:last-child {
+  border-bottom: 2px solid #000;
+}

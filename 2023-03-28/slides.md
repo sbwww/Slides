@@ -93,7 +93,7 @@ So, we explicitly <font color="red">decomposing</font> problems into sub-problem
 
 ## Recursive prompting - Cont
 
-![recursive_12](/img/recursive_12.png#w85)
+![recursive_12](/img/recursive_12.png#w80)
 
 ---
 
@@ -114,9 +114,9 @@ Different with Least-to-most prompting:
 
 ## DecomP - Procedure
 
-![split-merge](/img/split-merge.png#w70)
+![split-merge](/img/split-merge.png#w65)
 
-![decomp-case](/img/decomp-case.png#w70)
+![decomp-case](/img/decomp-case.png#w65)
 
 ---
 
@@ -374,11 +374,18 @@ prompt: CoT with natural language (NL) and programming language (PL)
 
 ## PAL - Ablation
 
-| weaker code pre-training LMs? | ![pal-abl1](/img/pal-abl1.png#w45) |  ✔  |
+| weaker code pre-training LMs? | ![pal-abl1](/img/pal-abl1.png#w40) |  ✔  |
 | :---------------------------: | :--------------------------------: | :-: |
-|    text pre-training LMs?     | ![pal-abl2](/img/pal-abl2.png#w40) |  ✔  |
-|     without interpreter?      | ![pal-abl3](/img/pal-abl3.png#w40) | ❌  |
-|     random varible name?      | ![pal-abl3](/img/pal-abl4.png#w65) | ❌  |
+|    text pre-training LMs?     | ![pal-abl2](/img/pal-abl2.png#w35) |  ✔  |
+|     without interpreter?      | ![pal-abl3](/img/pal-abl3.png#w35) | ❌  |
+|     random varible name?      | ![pal-abl3](/img/pal-abl4.png#w60) | ❌  |
+
+<style>
+img:hover {
+  background: #fff;
+  transform: scale(1.5);
+}
+</style>
 
 ---
 

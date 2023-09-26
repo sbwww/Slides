@@ -5,15 +5,15 @@ class: text-center
 highlighter: shiki
 lineNumbers: false
 info: |
-  ## Augmented Langauge Model (ALM)
+  ## Augmented Language Model (ALM)
 
   by [Bowen Shen](https://sbwww.github.io)
 drawings:
   persist: false
-title: Augmented Langauge Model (ALM)
+title: Augmented Language Model (ALM)
 ---
 
-# Augmented Langauge Model (ALM)
+# Augmented Language Model (ALM)
 
 <div class="abs-br m-6 flex gap-2">
   <a href="https://github.com/sbwww" target="_blank" alt="GitHub"
